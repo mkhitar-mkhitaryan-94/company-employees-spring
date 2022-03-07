@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    table th, td{
+        border: 1px solid black;
+
+    }
+</style>
+<body>
+<a href="/">Home Page</a>
+All Employees:
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Surname</th>
+        <th>Email</th>
+        <th>Phone Number</th>
+        <th>Salary</th>
+        <th>Position</th>
+        <th>Company</th>
+        <th>Action</th>
+    </tr>
+
+    <tr th:if="${employees!=null}" th:each="e: ${employees}">
+        <td th:text="${e.name}"></td>
+        <td th:text="${e.surname}"></td>
+        <td th:text="${e.email}"></td>
+        <td th:text="${e.phoneNumber}"></td>
+        <td th:text="${e.salary}"></td>
+        <td th:text="${e.position}"></td>
+        <td th:text="${e.company.name}"></td>
+        <td><a th:href="@{'/deleteEmployee/' + ${e.id}}">Delete</a></td>
+    </tr>
+</table>
+<br>
+
+<form action="/addEmployee" method="post">
+    <label>Name:</label><br>
+    <input type="text" name="name"><br>
+    <label>Surname</label><br>
+    <input type="text" name="surname"><br>
+    <label>Email</label><br>
+    <input type="email" name="email"><br>
+    <label>Phone Number</label><br>
+    <input type="text" name="phoneNumber"><br>
+    <label>Salary</label><br>
+    <input type="number" name="salary"><br>
+    <label>Position</label><br>
+    <input type="text" name="position"><br>
+    <label>Company</label><br>
+    <select name="company">
+        <option th:if="${companies!=null}" th:each="c:${companies}" th:value="${c.id}" th:text="${c.name}"></option>
+    </select>
+    <br>
+    <input type="submit" value="Add">
+</form>
+</body>
+</html>
