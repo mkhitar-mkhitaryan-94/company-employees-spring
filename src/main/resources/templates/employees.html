@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/html">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -11,18 +11,22 @@
     }
 </style>
 <body>
-<a href="/">Home Page</a>
-All Employees:
+<a href="?lang=en">English</a> |
+<a href="?lang=ru">Russian</a> |
+<a href="?lang=hy">Armenian</a><br><br>
+<a href="/" th:text="#{home.page}"></a>
+<h3 th:text="#{all.employees}"></h3>
 <table>
     <tr>
-        <th>Name</th>
-        <th>Surname</th>
-        <th>Email</th>
-        <th>Phone Number</th>
-        <th>Salary</th>
-        <th>Position</th>
-        <th>Company</th>
-        <th>Action</th>
+        <th th:text="#{name}"></th>
+        <th th:text="#{surname}"></th>
+        <th th:text="#{email}"></th>
+        <th th:text="#{phone.number}"></th>
+        <th th:text="#{salary}"></th>
+        <th th:text="#{position}"></th>
+        <th th:text="#{company}"></th>
+        <th th:text="#{picture}"></th>
+        <th th:text="#{action}"></th>
     </tr>
 
     <tr th:if="${employees!=null}" th:each="e: ${employees}">
@@ -33,29 +37,33 @@ All Employees:
         <td th:text="${e.salary}"></td>
         <td th:text="${e.position}"></td>
         <td th:text="${e.company.name}"></td>
+        <td><img th:if="${!e.getPictures().isEmpty() && e.getPictures() != null}" th:src="@{/getImage(picName=${e.getPictures().get(0).name})}" width="100px">
+            <img th:if="${e.getPictures().isEmpty() || e.getPictures() == null}" src="/static/default-non-user-no-photo-1.jpg" width="100px">
+        </td>
         <td><a th:href="@{'/deleteEmployee/' + ${e.id}}">Delete</a></td>
     </tr>
 </table>
 <br>
 
-<form action="/addEmployee" method="post">
-    <label>Name:</label><br>
+<form action="/addEmployee" method="post" enctype="multipart/form-data">
+    <label th:text="#{name}"></label><br>
     <input type="text" name="name"><br>
-    <label>Surname</label><br>
+    <label th:text="#{surname}"></label><br>
     <input type="text" name="surname"><br>
-    <label>Email</label><br>
+    <label th:text="#{email}"></label><br>
     <input type="email" name="email"><br>
-    <label>Phone Number</label><br>
+    <label th:text="#{phone.number}"></label><br>
     <input type="text" name="phoneNumber"><br>
-    <label>Salary</label><br>
+    <label th:text="#{salary}"></label><br>
     <input type="number" name="salary"><br>
-    <label>Position</label><br>
+    <label th:text="#{position}"></label><br>
     <input type="text" name="position"><br>
-    <label>Company</label><br>
-    <select name="company">
+    <label th:text="#{position}"></label><br>
+    <select name="companyId">
         <option th:if="${companies!=null}" th:each="c:${companies}" th:value="${c.id}" th:text="${c.name}"></option>
     </select>
     <br>
+    <input type="file" multiple name="pictures">
     <input type="submit" value="Add">
 </form>
 </body>

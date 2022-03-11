@@ -11,14 +11,17 @@
     }
 </style>
 <body>
+<a href="?lang=en">English</a> |
+<a href="?lang=ru">Russian</a> |
+<a href="?lang=hy">Armenian</a><br><br>
 <a href="/">Home Page</a><br>
-All Companies
+<h3 th:text="#{all.companies}"></h3>
 <table >
-    <tr >
-        <th>Name</th>
+    <tr>
+        <th th:text="#{name}"></th>
         <th>Size</th>
         <th>Address</th>
-        <th>Action</th>
+        <th th:text="#{action}"></th>
     </tr>
     <tr th:each="com : ${companies}">
         <th th:text="${com.name}"></th>
@@ -29,13 +32,13 @@ All Companies
 </table>
 <br>
 
-Add Company
+<h3 th:text="#{add.company}"></h3>
 <form action="/addCompany" method="post">
-    <label>Name:</label><br>
+    <label th:text="#{name}"></label><br>
     <input type="text" name="name"><br>
-    <label>Size</label><br>
+    <label th:text="#{size}"></label><br>
     <input type="number" name="size"><br>
-    <label>Address</label><br>
+    <label th:text="#{address}"></label><br>
     <input type="text" name="address"><br>
     <input type="submit" value="Add">
 </form>
